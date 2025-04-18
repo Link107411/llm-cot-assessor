@@ -3,7 +3,7 @@ import torch
 
 model_id = "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit"
 
-max_seq_length = 8192 # Choose any! We auto support RoPE Scaling internally!
+max_seq_length = 15000 # Choose any! We auto support RoPE Scaling internally!
 dtype = None # None for auto detection. Float16 for Tesla T4, V100, Bfloat16 for Ampere+
 load_in_4bit = True # Use 4bit quantization to reduce memory usage. Can be False.
 
