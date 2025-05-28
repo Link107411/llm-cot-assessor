@@ -2,7 +2,7 @@ from unsloth import FastLanguageModel
 import re
 
 model_id = "./outputs/checkpoint-12"
-model_id = "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit"
+# model_id = "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit"
 
 CONTEXT_LENGTH = 15000
 
@@ -15,20 +15,22 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 FastLanguageModel.for_inference(model) # Enable native 2x faster inference
 
 prompt_template = """<|begin_of_text|><|start_header_id|>user<|end_header_id|>
-Your task is to evaluate the validity of a reasoning process based on a given question.
+Please read the following question and its reasoning process, and determine whether the reasoning is valid.
+The question is between <question> and  </question> tags, and the reasoning is between <reasoning> and </reasoning> tags.
+
+<question>
+{}
+</question>
+
+<reasoning>
+{}
+</reasoning>
+
 If the reasoning is logically sound and correctly supports the answer to the question, output 'Accept'.
 If the reasoning is flawed, inconsistent, or does not properly support the answer, output 'Reject'.
-
 Only output 'Accept' or 'Reject'.
-
-### Question:
-{}
-
-### Reasoning:
-{}
-
-Only output 'Accept' or 'Reject'.
-<|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+"""
 
 def extract_response(response: str) -> str:
     match = re.search(r'<\|start_header_id\|>assistant<\|end_header_id\|>(.*?)<\|eot_id\|>', response, re.DOTALL)

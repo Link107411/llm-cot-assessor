@@ -35,14 +35,19 @@ dataset = load_dataset("json", data_files="mmlu_cot/college_mathematics.jsonl", 
 
 chat_template = """<|begin_of_text|><|start_header_id|>user<|end_header_id|>
 Please read the following question and its reasoning process, and determine whether the reasoning is valid.
+The question is between <question> and  </question> tags, and the reasoning is between <reasoning> and </reasoning> tags.
+
+<question>
+{}
+</question>
+
+<reasoning>
+{}
+</reasoning>
+
+If the reasoning is logically sound and correctly supports the answer to the question, output 'Accept'.
+If the reasoning is flawed, inconsistent, or does not properly support the answer, output 'Reject'.
 Only output 'Accept' or 'Reject'.
-
-### Question:
-{}
-
-### Reasoning:
-{}
-
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>
 {}
 <|eot_id|>"""
